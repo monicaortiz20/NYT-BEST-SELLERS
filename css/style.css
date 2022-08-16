@@ -1,0 +1,20 @@
+header {
+    background: linear-gradient(90deg, rgba(4,4,4,1) 0%, rgba(149,149,156,1) 41%, rgba(251,251,251,1) 100%);
+    font-family: 'UnifrakturMaguntia', cursive;
+    color: black;
+    display: flex;
+    align-items: center;
+    height: 200px;
+    justify-content: center;
+    flex-direction: column;
+    flex-wrap: nowrap;
+    text-shadow: 1px 1px white, -1px -1px #333;
+}
+
+header h1 {
+    font-size: xxx-large;
+}
+
+header h2 {
+    font-size: 45px;
+}
