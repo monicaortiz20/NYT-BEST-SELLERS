@@ -1,3 +1,25 @@
+// ------------------ FIREBASE -----------------//
+
+  // Your web app's Firebase configuration
+  const firebaseConfig = {
+    apiKey: "AIzaSyA4n8rngi4aJiTimJAV1ZqEj6t7bqhbShU",
+    authDomain: "nyt-best-sellers-6ae9f.firebaseapp.com",
+    projectId: "nyt-best-sellers-6ae9f",
+    storageBucket: "nyt-best-sellers-6ae9f.appspot.com",
+    messagingSenderId: "642446888824",
+    appId: "1:642446888824:web:de443e5e4a271322f4c28d"
+  };
+
+  // Initialize Firebase
+  const app = initializeApp(firebaseConfig);
+
+
+
+
+
+
+  
+
 // -------------- GESTIÓN ENTRADAS ----------------//
 
 async function bringEntries () {
