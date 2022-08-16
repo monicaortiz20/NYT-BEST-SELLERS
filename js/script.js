@@ -11,14 +11,66 @@
   };
 
   // Initialize Firebase
-  const app = initializeApp(firebaseConfig);
+    firebase.initializeApp(firebaseConfig);
+
+    //para llamar a la bbdd
+    const db = firebase.firestore();
+
+    //Creación de la colección "users"
+    const createUser = (user) => {
+        db.collection("users")
+            .add(user)
+            .then((docRef) => console.log("Document written with ID: ", docRef.id))
+            .catch((error) => console.error("Error adding document: ", error));
+    };
+
+
+    //Auth Firebase con Google
+    let provider = new firebase.auth.GoogleAuthProvider();
+    //coleccion users
+    const collect = db.collection('users').doc();
+    
+    //función para logarse con Google
+    async function loginGoogle(){
+       try {
+            const response = await firebase.auth().signInWithPopup(provider);
+            console.log(response)
+            if (response.user) {
+                document.getElementById('login').style.display = "none";
+                document.getElementById('logout').style.display = "none";
+
+                // Usuario registrado
+                const user = document.getElementById('usuario')
+                const name = document.createElement("p")
+
+                user.append(name)
+                name.innerHTML = `User ${response.additionalUserInfo.profile.given_name}`
+
+                //Añadir usuario a la bbdd
+                collect.set({
+                    Name: response.additionalUserInfo.profile.given_name,
+                    Email: response.additionalUserInfo.profile.email,
+                    ID: collect.id
+                })
+            }
+        
+       } catch (error) {
+            throw new Error(error);
+       }
+    }
 
 
 
+    //Botón para logarse con Google
+    const googleBtn = document.getElementById('login')
+
+    googleBtn.addEventListener('click', async (event) => {
+        try {
+            await loginGoogle()
+        } catch (error) {}
+    })
 
 
-
-  
 
 // -------------- GESTIÓN ENTRADAS ----------------//
 
@@ -26,7 +78,6 @@ async function bringEntries () {
     try {
         let responseBooks = await fetch(`https://api.nytimes.com/svc/books/v3/lists/names.json?api-key=6UgXRIVdy52ixbIvS1lEzoGQUOfC6qQ7`);
         let data = await responseBooks.json()
-        console.log(data)
         const entry = document.getElementsByClassName("entry")[0];
         entry.style.display="none";
         return data
