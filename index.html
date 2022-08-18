@@ -14,17 +14,39 @@
     <header>
         <h1>New York Times</h1>
         <h2>Best Sellers</h2>   
-        <div id="usuario"></div>     
+        <div id="user"></div>     
     </header>
     <section id="entries">
         <div class="entry"></div>
         <div class="entry" id="newentry"></div>
     </section>
+    <div class="users-reg">
+        <h3>Registro</h3>
+        <section class="section">
+            <form id="signup-form">
+                <label for="email">Email</label>
+                <input type ="text" placeholder="sarahsmith@gmail.com" id="signup-mail" class="input">
+                <label for="password">Password</label>
+                <input type ="password" id="signup-password" class="input">
+                
+                <button id="btn-registered" class="btns">Registro</button>
+            </form>
+        </section>
+        <section class="users-reg">
+            <h3>Iniciar Sesión</h3>
+            <form id="signin-form">
+                <label for="email">Email</label>
+                <input type ="text" placeholder="sarahsmith@gmail.com" id="signin-mail" class="input">
+                
+                <label for="password">Password</label>
+                <input type ="password" id="signin-password" class="input">
+            
+                <button id="btn-login" class="btns">Iniciar Sesión</button>
+            </form>
+        </section>
+    </div>
 
     <section id="iniciarSesion">
-        <Button id="login">
-            <p>Regístrate con <b>GOOGLE</p> 
-        </Button>
         <button id="logout">
             <p>Cerrar sesión</p>
         </button>
@@ -34,9 +56,13 @@
 
     </main>
 
+
+
+    <script src="https://www.gstatic.com/firebasejs/8.7.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.7.1/firebase-firestore.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.7.1/firebase-auth.js"></script>
+    
+    <script src="./js/script.js"></script>
 </body>
        
-        <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
-        <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-firestore.js"></script>
-        <script src="./js/script.js"></script>
 </html>

@@ -1,147 +1,169 @@
 // ------------------ FIREBASE -----------------//
 
-   // Your web app's Firebase configuration
-   const firebaseConfig = {
-    apiKey: "AIzaSyB2ETajR1cx8tzZlNXZjy9cgqbn0I2cvGM",
-    authDomain: "nyt-bestsellers-c5110.firebaseapp.com",
-    projectId: "nyt-bestsellers-c5110",
-    storageBucket: "nyt-bestsellers-c5110.appspot.com",
-    messagingSenderId: "857805696161",
-    appId: "1:857805696161:web:95a688f640509d901d14e0"
-  };
+const firebaseConfig = {
+  apiKey: "AIzaSyAB27hXAECxsaM16NBjN0LxPbZSkv0cbIQ",
+  authDomain: "nyt-best-sellers-851aa.firebaseapp.com",
+  projectId: "nyt-best-sellers-851aa",
+  storageBucket: "nyt-best-sellers-851aa.appspot.com",
+  messagingSenderId: "197509556446",
+  appId: "1:197509556446:web:d94f8e1cca01239db9fa4f"
+};
+
+//------------------ Initialize Firebase ------------------//
+firebase.initializeApp(firebaseConfig);
+
+//para llamar a la bbdd
+const db = firebase.firestore();
+//para la auth
+const auth = firebase.auth();
 
 
-  // Initialize Firebase
-    firebase.initializeApp(firebaseConfig);
+const registro = document.getElementById('signup-form');
 
-    //para llamar a la bbdd
-    const db = firebase.firestore();
-
-    db.collection("users").add({
-        first: "Ada",
-        last: "Lovelace",
-        born: 1815
+//funciónpara crear la colección ('users) y añadir la info recogida
+const saveUsers = (email, password) =>
+    db.collection("users").doc().set({
+        email,
+        password
     })
-        .then((docRef) => {
-            console.log("Document written with ID: ", docRef.id);
-        })
-        .catch((error) => {
-            console.error("Error adding document: ", error);
-        });
+
+
+    //función para submit los datos agregados en los inputs
+    registro.addEventListener('submit', async (e) => {
+      e.preventDefault();
+
+      const email = document.getElementById('signup-mail').value
+      const password = document.getElementById('signup-password').value
+
+      await saveUsers(email, password);
+      registro.reset();
+
+      console.log('dato recogido')
+
+})
 
 
 
-    //Auth Firebase con Google
-    // let provider = new firebase.auth.GoogleAuthProvider();
-    //coleccion users
-    
-    //función para logarse con Google
-    // async function loginGoogle(){
-    //    try {
-    //         const response = await firebase.auth().signInWithPopup(provider);
-    //         console.log(response)
-    //         if (response.user) {
-    //             document.getElementById('login').style.display = "none";
-    //             document.getElementById('logout').style.display = "none";
+//----------------- funciones para signUp -----------------//
+const signupForm = document.getElementById('signup-form');
 
-    //             // Usuario registrado
-    //             const user = document.getElementById('usuario')
-    //             const name = document.createElement("p")
+signupForm.addEventListener('submit', (e) => {
+  e.preventDefault();
+  
+  //valor inputs
+  const email = document.getElementById('signup-mail').value;
+  const password = document.getElementById('signup-password').value;
+  
+  auth
+  .createUserWithEmailAndPassword(email, password)
+  .then(userCredential => {
 
-    //             user.append(name)
-    //             name.innerHTML = `User ${response.additionalUserInfo.profile.given_name}`
-
-    //             //Añadir usuario a la bbdd
-    //             collect.set({
-    //                 Name: response.additionalUserInfo.profile.given_name,
-    //                 Email: response.additionalUserInfo.profile.email,
-    //                 ID: collect.id
-    //             })
-    //         }
-        
-    //    } catch (error) {
-    //         throw new Error(error);
-    //    }
-    // }
-
-    // async function loginGoogle(){
-    //     try {
-    //         await firebase.auth().signInWithPopup(provider).then((response) => {
-    //             console.log(response)
-    //             let user = [
-    //                 {
-    //                     "Name": response.user.name,
-    //                     "Email": response.user.email,
-    //                     "ID": response.id
-    //                 }
-    //               ];
-    //               console.log(user);
-    //               localStorage.setItem("user", JSON.stringify(user));
-    //         }).catch((error) => {
-    //             console.log(error)
-    //         })
-    //     } catch (error) {
-    //         console.log(error)
-    //     }
-    // }
+    //limpiamos el form
+    signupForm.reset();
+    console.log('usuario registrado')
+  })
+})
 
 
+//----------------- funciones para signIn -----------------//
+const signinForm = document.getElementById('signin-form');
 
-    // //Botón para logarse con Google
-    // const googleBtn = document.getElementById('login')
+signinForm.addEventListener('submit', (e) => {
+  e.preventDefault();
 
-    // googleBtn.addEventListener('click', async (event) => {
-    //     try {
-    //         await loginGoogle()
-    //     } catch (error) {}
-    // })
+  //valor inputs
+  const email = document.getElementById('signin-mail').value;
+  const password = document.getElementById('signin-password').value;
+  
+  auth
+  .signInWithEmailAndPassword(email, password)
+  .then(userCredential => {
+
+    //limpiamos el form
+    signupForm.reset();
+    console.log('sign in: usuario logado')
+  })
+})
+
+
+//----------------- función para logout -----------------//
+const logout = document.getElementById('logout');
+
+logout.addEventListener('click', e => {
+  e.preventDefault();
+
+  auth.signOut().then(() => {
+    console.log('sesión cerrada')
+  })
+})
+
+
+//----------------- Crear BBDD + añadir info -----------------//
+const tablon = document.getElementById('tablon');
+
+
+
+//----------------- Events for users -----------------//
+
+auth.onAuthStateChanged(user =>{
+  if (user) {
+    console.log('auth: OK, sign in')
+  }
+})
+
+
+
+
+
+
+
 
 
 
 // -------------- GESTIÓN ENTRADAS ----------------//
 
-async function bringEntries () {
-    try {
-        let responseBooks = await fetch(`https://api.nytimes.com/svc/books/v3/lists/names.json?api-key=6UgXRIVdy52ixbIvS1lEzoGQUOfC6qQ7`);
-        let data = await responseBooks.json()
-        const entry = document.getElementsByClassName("entry")[0];
-        entry.style.display="none";
-        return data
+// async function bringEntries () {
+//     try {
+//         let responseBooks = await fetch(`https://api.nytimes.com/svc/books/v3/lists/names.json?api-key=6UgXRIVdy52ixbIvS1lEzoGQUOfC6qQ7`);
+//         let data = await responseBooks.json()
+//         const entry = document.getElementsByClassName("entry")[0];
+//         entry.style.display="none";
+//         return data
         
-    } catch (error) {
-        console.error(error);
-    }
-}
+//     } catch (error) {
+//         console.error(error);
+//     }
+// }
 
-bringEntries().then(function bringBooks(books){
-    let categories = books.results
+// bringEntries().then(function bringBooks(books){
+//     let categories = books.results
 
-    //Para cada categoría:
-    categories.forEach((category, i) => {
+//     //Para cada categoría:
+//     categories.forEach((category, i) => {
 
-        //creamos tarjetas:
-        let h3 = document.createElement("h3");
-        let pOld = document.createElement("p");
-        let pNew = document.createElement("p");
-        let pUpdate = document.createElement("p");
-        let btn = document.createElement("button");
-        let div = document.createElement("div");
-        let tablon = document.getElementById("tablon");
+//         //creamos tarjetas:
+//         let h3 = document.createElement("h3");
+//         let pOld = document.createElement("p");
+//         let pNew = document.createElement("p");
+//         let pUpdate = document.createElement("p");
+//         let btn = document.createElement("button");
+//         let div = document.createElement("div");
+//         let tablon = document.getElementById("tablon");
 
-        div.append(h3,pOld,pNew,pUpdate,btn)
-        tablon.appendChild(div)
+//         div.append(h3,pOld,pNew,pUpdate,btn)
+//         tablon.appendChild(div)
 
-        //añadimos info de cada uno
-        h3.innerHTML = category.display_name
-        pOld.innerHTML = `Oldest: ${category.oldest_published_date}`
-        pNew.innerHTML = `Newest: ${category.newest_published_date}`
-        pUpdate.innerHTML = `Updated: ${category.updated}`
-        btn.innerHTML = "READ MORE"
+//         //añadimos info de cada uno
+//         h3.innerHTML = category.display_name
+//         pOld.innerHTML = `Oldest: ${category.oldest_published_date}`
+//         pNew.innerHTML = `Newest: ${category.newest_published_date}`
+//         pUpdate.innerHTML = `Updated: ${category.updated}`
+//         btn.innerHTML = "READ MORE"
 
-        //estilos:
-        h3.classList = "title"
-        btn.classList = "button"
-        div.classList = "divCategories"
+//         //estilos:
+//         h3.classList = "title"
+//         btn.classList = "button"
+//         div.classList = "divCategories"
 
-    });
-})
+//     });
+// })
