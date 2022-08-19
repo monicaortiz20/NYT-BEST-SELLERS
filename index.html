@@ -14,15 +14,12 @@
     <header>
         <h1>New York Times</h1>
         <h2>Best Sellers</h2>   
-        <div id="user"></div>     
+        <div id="user"></div>  
     </header>
-    <section id="entries">
-        <div class="entry"></div>
-        <div class="entry" id="newentry"></div>
-    </section>
+
     <div class="users-reg">
-        <h3>Registro</h3>
-        <section class="section">
+        <button id="registered-btn" class="btns">Registro</button>
+        <section class="section" id="signup-section">
             <form id="signup-form">
                 <label for="email">Email</label>
                 <input type ="text" placeholder="sarahsmith@gmail.com" id="signup-mail" class="input">
@@ -32,8 +29,8 @@
                 <button id="btn-registered" class="btns">Registro</button>
             </form>
         </section>
-        <section class="users-reg">
-            <h3>Iniciar Sesión</h3>
+        <button id="iniciate-btn" class="btns">Iniciar sesión</button>
+        <section class="users-reg" id="signin-section">
             <form id="signin-form">
                 <label for="email">Email</label>
                 <input type ="text" placeholder="sarahsmith@gmail.com" id="signin-mail" class="input">
@@ -45,6 +42,10 @@
             </form>
         </section>
     </div>
+    <section id="entries">
+        <div class="entry"></div>
+        <div class="entry" id="newentry"></div>
+    </section>
 
     <section id="iniciarSesion">
         <button id="logout">
