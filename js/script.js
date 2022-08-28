@@ -238,7 +238,7 @@ function bringBooks(cat) {
  // -------------- GESTIÓN LIBROS dentro de las categorías ----------------// 
 
 async function booksList () {
-  let booksList = await fetch (`https://api.nytimes.com/svc/books/v3/lists/${event.srcElement.attributes.src.nodeValue}.json?api-key=U5XodN0WD6AxEelHTmcyeksK5nC8On22`)
+  let booksList = await fetch (`https://api.nytimes.com/svc/books/v3/lists/${event.srcElement.attributes.src.nodeValue}.json?api-key=6UgXRIVdy52ixbIvS1lEzoGQUOfC6qQ7`)
   let dataBooks = await booksList.json();
   bookDetail(dataBooks.results)
   for(let cat of document.getElementsByClassName("divCategories")){
