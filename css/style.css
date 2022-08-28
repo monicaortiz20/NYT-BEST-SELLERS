@@ -23,7 +23,7 @@ header h2 {
     text-decoration: underline;
 }
 
-/* Estilo botón Google */
+/* Estilo botones */
 
 #iniciarSesion {
     display: flex;
@@ -92,7 +92,8 @@ header h2 {
     width: 33%;
 }
 
-/* Estilos Entries */
+
+/* Estilos Categorías */
 
 .divCategories {
     padding: 10px 20px;
@@ -115,3 +116,39 @@ header h2 {
     height: 30px;
     border-radius: 40px;
   }
+
+/* Estilos libros */
+
+  .divBooks {
+    padding: 10px 20px;
+    margin: 1rem;
+    border: #415A77 5px solid;
+    border-top-left-radius: 20px;
+    border-bottom-right-radius: 20px;
+    background-color: #E0E1DD;
+    flex-wrap: wrap;
+  }
+
+
+  .amazon{
+    border: 2px double #0D1B2A;
+    background-color: #778DA9;
+    color: white;
+    border-radius: 40px;
+    margin: 1rem;
+    padding: 10px;
+    display: flex;
+    align-items: center;
+  }
+
+  .likeBtn {
+    border: 2px solid #9d0208;
+    background-color: white;
+    color: #9d0208;
+    border-radius: 40px;
+    margin: 1rem;
+    padding: 10px;
+    display: flex;
+    align-items: center;
+  }
+
