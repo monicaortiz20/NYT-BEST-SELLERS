@@ -265,11 +265,11 @@ function bookDetail(results){
   const btnBack = document.createElement("div")
   btnBack.innerHTML = `
                       <section>
-                      <input type="submit" class="amazon" value="Go back"/>
+                      <input type="submit" class="btnBack" value="Go back"/>
                       </section>
                       `
   document.body.append(mainTitle, btnBack)
-
+  
   //para que salga un tablón nuevo con los libros
   const newDesck = document.createElement("section")
   newDesck.id = "newDesk"
@@ -331,6 +331,23 @@ function bookDetail(results){
 
   })
 }
+
+
+//-------------- botón Go Back! -------------//
+// const btnBack = document.getElementsByClassName("btnBack")
+
+// btnBack.addEventListener('submit', e => {
+//   e.preventDefault()
+
+//   try {
+//     document.getElementsByClassName("divBooks").style.display = "none"
+//     document.getElementsByClassName("divCategories").style.display = "flex"
+
+//   } catch (error) {
+//     console.log(error)
+//   }
+// })
+
 
   //------------ Cerrar sesión ------------------////
   const signOut = () => {
